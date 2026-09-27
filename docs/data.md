@@ -33,9 +33,9 @@ The script selects the first 801 columns, divides heights by four with `ceil`, c
 | `DB_DEM2.mat` / `DB_DEM2` | Every second row/column, 0.37 m noise standard deviation | DEM1 |
 | `DB_DEM3.mat` / `DB_DEM3` | Every fourth row/column, 3.40 m noise standard deviation | DEM2 |
 
-These files do **not** form the `DB_SRTM.mat` input expected by `main.m`. Their bounds also differ from the default flight location in `main.m`; choosing matching truth/filter grids and flight locations is an experiment configuration step, not an automatic conversion.
+These outputs use different variable names and geographic bounds from `main.m`'s default input. Configure matching truth/filter grids and flight locations before using them in an experiment.
 
-The source MAT file, original acquisition version, void handling, vertical datum, and preprocessing record were not supplied. Do not treat similarly named modern SRTM downloads as identical experiment inputs; record source identifiers and redistribution terms when adding data.
+The source MAT file is absent, and its acquisition version, void handling, vertical datum, and preprocessing record are unspecified. Record source identifiers, processing steps, and redistribution terms when supplying a dataset.
 
 ## Saved results and plotting
 
@@ -43,8 +43,8 @@ The source MAT file, original acquisition version, void handling, vertical datum
 - [plot_result.m](../plot_result.m) loads many separately named `result_*.mat` files for mode, DEM, altitude, frequency, terrain, and bias comparisons. A single `result.mat` does not satisfy this input set.
 - [plot_terrain.m](../plot_terrain.m) and [plot_terrain_heights.m](../plot_terrain_heights.m) require the generated terrain files and fixed grid indices.
 - `plot_terrain_heights.m` also expects color variables supplied by `plot_result.m`.
-- [Simpletest.m](../Simpletest.m) plots a random particle cloud; it is not a navigation validation.
+- [Simpletest.m](../Simpletest.m) is a standalone visualization of a random particle cloud.
 
 ## Synthetic input
 
-[example_synthetic.m](../example_synthetic.m) creates a small grid with an isolated peak entirely in memory. This artificial geometry provides a known closest target for a measurement smoke check; it is unrelated to the paper's terrain and introduces no external data dependency.
+[example_synthetic.m](../example_synthetic.m) creates a small artificial grid with an isolated peak entirely in memory. The peak defines a known closest target for geometry and interpolation checks.

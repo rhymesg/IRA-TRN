@@ -9,7 +9,7 @@ This guide covers [main.m](../main.m), its configuration and outputs. Start with
 3. Review the constants and `mode` near the start of `main.m`, including flight position, terrain coverage, and noise parameters.
 4. Run from the repository root using the seeded [README command](../README.md#usage).
 
-There is no command-line configuration interface. The script assigns settings directly and uses the current directory for relative paths and `result.mat`.
+Configure settings directly in `main.m`. The script uses the current directory for relative paths and `result.mat`.
 
 | `mode` | Source constant | Measurement update |
 |---|---|---|
@@ -17,8 +17,6 @@ There is no command-line configuration interface. The script assigns settings di
 | `1` | `TRN_IRA` | Existing IRA method using displaced terrain lookup |
 | `2` | `TRN_IRA_C1` | Closest-point prediction with range-only likelihood |
 | `3` | `TRN_IRA_C3` | Closest-point prediction with correlated range and angle likelihood |
-
-Use only these modes; other values have no supported measurement-update contract.
 
 ## Settings and reproducibility
 
@@ -29,7 +27,7 @@ Use only these modes; other values have no supported measurement-update contract
 - `rng(0, 'twister')` in the documented command controls this run's random stream; no original experiment seed is recorded.
 - Preserve the source revision, MATLAB/toolbox versions, settings, seed, input-file checksums, and output filename with each experiment.
 
-The supplied configuration differs from the paper's nominal experiment: it uses a 0.2 s time step and 20 Monte Carlo trials, while the paper's nominal comparison uses 1 Hz and 100 trials. It loads `DB_SRTM.mat`, whereas the published comparisons use the virtual terrain described in the [data guide](data.md); changing the time step alone does not reproduce those comparisons.
+The default configuration uses a 0.2 s time step, 20 Monte Carlo trials, and `DB_SRTM.mat`. The paper's nominal comparison uses 1 Hz, 100 trials, and the virtual terrain described in the [data guide](data.md).
 
 ## Output contract
 
@@ -45,10 +43,10 @@ The script prints trial progress, elapsed time, and a convergence percentage whe
 
 RMS variables are only produced when there is more than one trial and at least one qualifies. Run in a fresh MATLAB process: stale workspace variables can otherwise survive the script's conditional assignments and be saved.
 
-The RMS summary excludes nonconverged trials; it is not an all-trial accuracy measure. `True_measurement_list` is allocated but its population is commented out, and particles are cleared before saving.
+The RMS summary excludes nonconverged trials. `True_measurement_list` is allocated but its population is commented out, and particles are cleared before saving.
 
 ## Reproducing published results
 
-The paper's Table 4 reports, for example, 2.08 m and 2.20 m average RMS error for the proposed method on rough and smooth DEM1 terrain at 1 Hz. These are published results, not measurements from this repository's checks.
+The paper's Table 4 reports 2.08 m and 2.20 m average RMS error for the proposed method on rough and smooth DEM1 terrain at 1 Hz. These published results have not been reproduced with this checkout.
 
-Reproduction requires the original terrain/preprocessing, scenario configurations, repeated trials, and matching evaluation conventions. The plotting scripts require separately named experiment outputs; no automated paper-reproduction harness is provided.
+To reproduce the comparison, supply the original terrain/preprocessing, configure the scenarios and trial count, and match the paper's evaluation conventions. Run each scenario separately and save the named outputs consumed by [plot_result.m](../plot_result.m).

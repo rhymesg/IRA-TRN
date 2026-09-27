@@ -1,4 +1,4 @@
-% Legacy measurement-bounded search; not used by main.m; see docs/limitations.md.
+% Legacy measurement-bounded search; not used by main.m; see docs/implementation-notes.md.
 % See docs/running.md and docs/measurement-model.md for usage and contracts.
 function [lat_return, long_return, h_return] = Search(state,DB,T_M,noise)
 D2R = pi/180;

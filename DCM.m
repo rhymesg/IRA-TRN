@@ -1,4 +1,4 @@
-% Euler-angle direction cosine matrix (radians); see docs/limitations.md.
+% Euler-angle direction cosine matrix (radians); see docs/implementation-notes.md.
 % See docs/running.md and docs/measurement-model.md for usage and contracts.
 function R = DCM(yaw,pitch,roll)
     cr = cos(roll); sr = sin(roll);
