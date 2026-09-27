@@ -1,13 +1,13 @@
 # Running IRA-TRN
 
-This guide covers [main.m](../main.m), its configuration and outputs. Start with the [README installation and synthetic example](../README.md#installation).
+This guide covers [main.m](../main.m), its configuration and outputs. Start with the [README installation and synthetic example](../README.md#examples).
 
 ## Research simulation
 
 1. Provide MATLAB with Statistics and Machine Learning Toolbox.
 2. Place `DB_SRTM.mat` in a sibling `DTED` directory, containing both structures described in the [data guide](data.md).
 3. Review the constants and `mode` near the start of `main.m`, including flight position, terrain coverage, and noise parameters.
-4. Run from the repository root using the seeded [README command](../README.md#usage).
+4. Run from the repository root using the seeded [README command](../README.md#examples).
 
 Configure settings directly in `main.m`. The script uses the current directory for relative paths and `result.mat`.
 
