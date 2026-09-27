@@ -46,7 +46,7 @@ The script runs seeded Monte Carlo trials, creates plots, and overwrites `result
 
 ## Implementation scope
 
-The synthetic example covers the radar measurement geometry; the full particle-filter simulation requires external DEM data. [Implementation notes](docs/implementation-notes.md) describe numerical assumptions and coverage; native MATLAB execution remains unverified.
+The synthetic example covers the radar measurement geometry; the full particle-filter simulation requires external DEM data. [Implementation notes](docs/implementation-notes.md) describe numerical assumptions and coverage.
 
 ### Checks
 

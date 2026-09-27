@@ -30,8 +30,6 @@ When adapting geometry, search admissibility, noise, or evaluation conventions, 
 
 ## Environment and example coverage
 
-The original MATLAB release is unspecified, and execution of the example and full simulation remains unverified. Octave compatibility is also unverified.
-
 [example_synthetic.m](../example_synthetic.m) checks spherical conversion, bilinear interpolation, a known closest target, and its range/angles using deterministic inputs. Particle-filter evaluation requires the separate [simulation workflow](running.md#reproducing-published-results) and its [terrain inputs](data.md).
 
 Coordinate tolerances are `1e-12` rad and `1e-6` m; measurement comparisons use `1e-10` rad and `1e-6` m. These tolerances measure numerical agreement in the example.
