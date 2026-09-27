@@ -10,7 +10,7 @@ The implementation corresponds to the [paper's](../README.md#citation) closest-p
 
 | Component | Behavior and adaptation considerations |
 |---|---|
-| [DCM.m](../DCM.m) | Its `(3,2)` entry uses `cr*sp*sy - sr*sy`; the rotation product in its own comment implies `cr*sp*sy - sr*cy`. Nonzero-roll rotations may not be orthogonal; the default zero attitude does not validate general attitude use. |
+| [DCM.m](../DCM.m) | Its `(3,2)` entry is corrected to `cr*sp*sy - sr*cy`, consistent with the stated rotation product. [Regression checks](../tests/integration/rotation/README.md) cover nonzero roll and general-attitude orthogonality. |
 | [Inverse_Transform.m](../Inverse_Transform.m) | `y/abs(y)` is undefined at zero cross-track displacement; zero speed/range also divides by zero, and `acos` arguments are not clamped for roundoff. |
 | [Search.m](../Search.m) | No eligible coarse point leaves the selected indices undefined. Edge winners cause out-of-range neighborhood indexing; refinement does not preserve the coarse angular gate. |
 | [get_height.m](../get_height.m) | Queries on the maximum row/column endpoint or outside the grid can index beyond the matrix. |
@@ -23,7 +23,7 @@ When adapting geometry, search admissibility, noise, or evaluation conventions, 
 
 ## Auxiliary scripts
 
-- [Search_p.m](../Search_p.m) is an auxiliary measurement-bounded search, unused by `main.m`. Its function name is `Search`, and its grid accesses need bounds checks before standalone use.
+- [Search_p.m](../Search_p.m) is an auxiliary measurement-bounded search, unused by `main.m`. Its function name now matches its filename; its grid accesses still need bounds checks before standalone use.
 - [Measure_propagate.m](../Measure_propagate.m) is an auxiliary noisy measurement inversion, unused by `main.m`. Check its denominators and square-root domains before using it as an inverse of `Inverse_Transform`.
 - [findZ.m](../findZ.m) assumes `rho^2 >= x^2 + y^2` and selects the positive root.
 - Terrain preparation and plotting scripts use the [external data and workspace variables](data.md#saved-results-and-plotting) listed in the data guide.

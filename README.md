@@ -46,6 +46,8 @@ The script runs seeded Monte Carlo trials, creates plots, and overwrites `result
 
 ## Development
 
+Run the [nonzero-attitude rotation regression checks](tests/integration/rotation/README.md) before changing the corresponding numerical routines.
+
 Run the synthetic command after changes to the measurement path. MATLAB execution remains unverified; [environment and example coverage](docs/implementation-notes.md#environment-and-example-coverage) describes the checks and runtime status.
 
 Report issues or propose fixes through the [issue tracker](https://github.com/rhymesg/IRA-TRN/issues), including the revision, MATLAB/toolbox versions, command, mode, random seed, terrain dimensions and bounds, and error or unexpected output. Suggested GitHub description and topics are in [repository metadata](docs/repository-metadata.md).
