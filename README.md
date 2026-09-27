@@ -8,6 +8,8 @@ The implementation follows the closest-point measurement method in **“Terrain-
 
 Use it as a technical reference for terrain-aided navigation, radar measurement geometry, and sequential importance resampling. Start with the [measurement model](docs/measurement-model.md), [algorithm-to-source map](#algorithms-and-source), or [synthetic example](example_synthetic.m).
 
+The [measurement equations and coordinate contracts](docs/measurement-model.md) also guide implementations in Python, C++, or other languages.
+
 ## Method
 
 For each position particle, find the closest terrain point in a DEM and predict the radar range and along-/cross-track angles. Compare those predictions with the measurements to update particle weights and estimate position.
@@ -36,7 +38,7 @@ matlab -batch "example_synthetic"
 
 It checks coordinate conversion, terrain interpolation, closest-point selection, and range/angle geometry on an artificial terrain with an isolated peak. Expected completion is `Synthetic measurement checks passed.`; it opens no figures and writes no files.
 
-The full simulation requires external terrain data, which are not included. Provide `../DTED/DB_SRTM.mat` with the [documented terrain structures](docs/data.md), then set `mode` and the experiment parameters in [main.m](main.m):
+For the full simulation, provide `../DTED/DB_SRTM.mat` with the [documented terrain structures](docs/data.md), then set `mode` and the experiment parameters in [main.m](main.m):
 
 ```bash
 matlab -batch "rng(0, 'twister'); main"
@@ -46,7 +48,7 @@ The script runs seeded Monte Carlo trials, creates plots, and overwrites `result
 
 ## Implementation scope
 
-The synthetic example covers the radar measurement geometry; the full particle-filter simulation requires external DEM data. [Implementation notes](docs/implementation-notes.md) describe numerical assumptions and coverage.
+The source connects coordinate transforms, DEM search and interpolation, radar prediction, and particle filtering. The synthetic example isolates the measurement geometry; [implementation notes](docs/implementation-notes.md) explain the numerical conventions.
 
 ### Checks
 
