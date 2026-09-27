@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this method, please cite the paper in preferred-citation."
+type: software
+title: IRA-TRN
+authors:
+  - name: "The IRA-TRN project"
+repository-code: "https://github.com/rhymesg/IRA-TRN"
+abstract: "MATLAB terrain-referenced navigation using an interferometric radar altimeter, closest-point digital elevation model search, and a particle filter."
+keywords:
+  - terrain-referenced navigation
+  - interferometric radar altimeter
+  - particle filter
+  - digital elevation model
+  - MATLAB
+preferred-citation:
+  type: article
+  title: "Terrain-Referenced Navigation using an Interferometric Radar Altimeter"
+  authors:
+    - family-names: Kim
+      given-names: Youngjoo
+    - family-names: Park
+      given-names: Junwoo
+    - family-names: Bang
+      given-names: Hyochoong
+  journal: "NAVIGATION: Journal of the Institute of Navigation"
+  volume: "65"
+  issue: "2"
+  start: "157"
+  end: "167"
+  year: 2018
+  doi: "10.1002/navi.233"
+  url: "https://www.ion.org/publications/abstract.cfm?articleID=102746"
