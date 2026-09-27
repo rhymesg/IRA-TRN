@@ -47,6 +47,6 @@ The RMS summary excludes nonconverged trials. `True_measurement_list` is allocat
 
 ## Reproducing published results
 
-The paper's Table 4 reports 2.08 m and 2.20 m average RMS error for the proposed method on rough and smooth DEM1 terrain at 1 Hz. These published results have not been reproduced with this checkout.
+For the published experiment settings and RMS results, refer to the paper's Table 4 and its rough/smooth DEM1 cases at 1 Hz.
 
 To reproduce the comparison, supply the original terrain/preprocessing, configure the scenarios and trial count, and match the paper's evaluation conventions. Run each scenario separately and save the named outputs consumed by [plot_result.m](../plot_result.m).

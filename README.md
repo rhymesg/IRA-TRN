@@ -56,6 +56,8 @@ The [rotation regression checks](tests/integration/rotation/README.md) cover non
 
 ## Citation
 
+For academic attribution, please acknowledge this repository when adapting its code or examples.
+
 Please cite the paper when using this method:
 
 > Youngjoo Kim, Junwoo Park, and Hyochoong Bang. “Terrain-Referenced Navigation using an Interferometric Radar Altimeter.” *NAVIGATION: Journal of the Institute of Navigation*, 65(2), 157–167, 2018. [doi:10.1002/navi.233](https://doi.org/10.1002/navi.233). [Publisher record](https://www.ion.org/publications/abstract.cfm?articleID=102746).

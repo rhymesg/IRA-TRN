@@ -46,5 +46,30 @@ assert(abs(theta-expected_theta) < 1e-10);
 DB.data = 100 + 2*rows + 3*cols;
 interpolated = get_height(37.3905*pi/180, 128.14525*pi/180, DB);
 assert(abs(interpolated - (100 + 2*10.5 + 3*15.25)) < 1e-6);
+assert(abs(get_height(DB.MAX_LAT*pi/180, DB.MAX_LONG*pi/180, DB)-300) < 1e-6);
+
+[~, ~, zero_cross_track] = Inverse_Transform(Xt, Yt, Zt, 1, 0, 2, state);
+assert(zero_cross_track == 0);
+
+edge_db = DB;
+edge_db.data = zeros(41, 41);
+edge_db.data(41, 41) = 1000;
+[xe, ye, ze] = llh2ECEF(DB.MAX_LAT*pi/180, DB.MAX_LONG*pi/180, 2500);
+edge_lat = DB.MAX_LAT*pi/180;
+edge_lon = DB.MAX_LONG*pi/180;
+edge_velocity = 40*([-sin(edge_lon); cos(edge_lon); 0] - ...
+    0.05*[xe; ye; ze]/norm([xe; ye; ze]));
+edge_state = [xe; ye; ze; edge_velocity; 0; 0; 0];
+[lat_edge, lon_edge, h_edge] = Search(edge_state, edge_db);
+assert(abs(lat_edge-edge_lat) < 1e-12 && abs(lon_edge-edge_lon) < 1e-12);
+assert(h_edge == 1000);
+
+state(4:6) = state(1:3)/norm(state(1:3));
+try
+    Search(state, DB);
+    error('example_synthetic:MissingError', 'Expected an empty search gate.');
+catch exception
+    assert(strcmp(exception.identifier, 'Search:NoCandidate'));
+end
 fprintf('Synthetic measurement checks passed.\n');
 end

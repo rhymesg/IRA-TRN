@@ -11,9 +11,9 @@ The implementation corresponds to the [paper's](../README.md#citation) closest-p
 | Component | Behavior and adaptation considerations |
 |---|---|
 | [DCM.m](../DCM.m) | Its `(3,2)` entry is corrected to `cr*sp*sy - sr*cy`, consistent with the stated rotation product. [Regression checks](../tests/integration/rotation/README.md) cover nonzero roll and general-attitude orthogonality. |
-| [Inverse_Transform.m](../Inverse_Transform.m) | `y/abs(y)` is undefined at zero cross-track displacement; zero speed/range also divides by zero, and `acos` arguments are not clamped for roundoff. |
-| [Search.m](../Search.m) | No eligible coarse point leaves the selected indices undefined. Edge winners cause out-of-range neighborhood indexing; refinement does not preserve the coarse angular gate. |
-| [get_height.m](../get_height.m) | Queries on the maximum row/column endpoint or outside the grid can index beyond the matrix. |
+| [Inverse_Transform.m](../Inverse_Transform.m) | Uses `atan2(y,hypot(x,z))` for the cross-track angle, including zero displacement; clamps the along-track cosine for roundoff and requires positive speed and range. |
+| [Search.m](../Search.m) | Reports `Search:NoCandidate` for an empty angular gate. Returns an edge winner directly and refines interior winners; the angular gate is applied during coarse selection. |
+| [get_height.m](../get_height.m) | Interpolates through the final row and column using the adjacent cell. Reports `get_height:OutsideGrid` for coordinates outside the DEM. |
 | [main.m](../main.m) | Longitude offsets/errors use `(R+h)` without the latitude cosine, so reported horizontal distances are the script's coordinate approximation. |
 | [main.m](../main.m) | Weights below a total threshold become uniform; NaN weights are not recovered, and the code does not use log likelihoods. |
 | [main.m](../main.m) | The three-dimensional likelihood uses `sqrt(2*pi*det(RR))`, matching the printed Eq. (14), rather than the normalized 3D Gaussian prefactor. The common factor cancels in normalized weights but affects the absolute underflow threshold. |

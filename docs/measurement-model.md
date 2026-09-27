@@ -11,10 +11,10 @@ For a particle position `p`, velocity `v`, closest terrain point `q`, and body-f
 ```text
 rho   = sqrt(x^2 + y^2 + z^2)
 gamma = pi/2 - acos(dot(q-p, v) / (norm(q-p) * norm(v)))
-theta = (y/abs(y)) * acos(sqrt(x^2 + z^2) / rho)
+theta = atan2(y, sqrt(x^2 + z^2))
 ```
 
-The code gives `theta` the sign of body-frame `y`; see [implementation notes](implementation-notes.md#numerical-and-geometric-details) for input domains and numerical details.
+The cross-track expression is equivalent to Eq. (10) for nonzero `y` and returns zero at `y = 0`. The along-track cosine is clamped to `[-1,1]` for roundoff; see [implementation notes](implementation-notes.md#numerical-and-geometric-details) for input domains.
 
 For the proposed three-measurement mode, Eqs. (13)–(15) give:
 
@@ -46,7 +46,7 @@ The refinement excludes offsets with either component zero and does not reapply 
 | Eq. (1), conventional radar altimeter | `TRN_RA` in [main.m](../main.m) | Terrain height at particle latitude/longitude |
 | Eqs. (2)–(6), particle filter | Propagation, normalization, mean, and resampling blocks in [main.m](../main.m) | Stores nine values per particle while perturbing position |
 | Eq. (9), bilinear interpolation | [get_height.m](../get_height.m), refinement in [Search.m](../Search.m) | Assumes a regular grid with valid neighboring cells |
-| Eq. (10), measurement geometry | [Inverse_Transform.m](../Inverse_Transform.m) | Requires nonzero velocity, range, and cross-track displacement |
+| Eq. (10), measurement geometry | [Inverse_Transform.m](../Inverse_Transform.m) | Requires positive speed and range; zero cross-track displacement returns zero angle |
 | Eqs. (11)–(12), existing IRA method | `TRN_IRA` in [main.m](../main.m), [findZ.m](../findZ.m) | Uses measured horizontal displacement and positive vertical component |
 | Eqs. (13)–(15), proposed method | `TRN_IRA_C3` in [main.m](../main.m) | Searches `DB_e` for each particle; truth uses `DB` |
 
@@ -61,7 +61,7 @@ The refinement excludes offsets with either component zero and does not reapply 
 | `ECEF2llh(pos)` | Three-component ECEF position; returns spherical latitude, longitude, height |
 | `ECEF2body(X,Y,Z,state)` / `body2ECEF(x,y,z,state)` | Absolute ECEF target ↔ relative body coordinates, via NED |
 | `Search(state,DB)` | Returns scalar latitude/longitude in radians and height in metres |
-| `get_height(lat,lon,DB)` | Bilinear height in metres at an interior grid location |
+| `get_height(lat,lon,DB)` | Bilinear height in metres inside the grid, including its final row and column |
 | `Inverse_Transform(X,Y,Z,x,y,z,state)` | Matching ECEF target and body displacement; returns range (m), angles (rad) |
 | `ERF(value,mean,variance)` | Scalar normal density with strictly positive variance |
 

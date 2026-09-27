@@ -6,7 +6,8 @@ R2D = 180/pi;
 R   = 6378137;
 
 data            = DB.data;
-Min_distance    = 10^6;
+Min_distance    = Inf;
+Min_lat_index   = [];
 Pos             = state(1:3);
 Vel             = state(4:6);
 norm_Vel        = sqrt(Vel(1)^2 + Vel(2)^2 + Vel(3)^2);
@@ -60,9 +61,18 @@ for i = min_i:max_i;
     end
 end
 
+if isempty(Min_lat_index)
+    error('Search:NoCandidate', 'No terrain point satisfies the search window and angular gate.');
+end
 lat_return  = Min_lat;
 long_return = Min_long;
 h_return    = data(Min_lat_index,Min_long_index);
+
+% Edge winners retain the closest grid point; interior winners are refined.
+if Min_lat_index == 1 || Min_lat_index == DB.LAT_MAX_index || ...
+        Min_long_index == 1 || Min_long_index == DB.LONG_MAX_index
+    return;
+end
 
 H = [DB.data(Min_lat_index-1,Min_long_index-1),DB.data(Min_lat_index-1,Min_long_index),DB.data(Min_lat_index-1,Min_long_index+1);
     DB.data(Min_lat_index,Min_long_index-1),DB.data(Min_lat_index,Min_long_index),DB.data(Min_lat_index,Min_long_index+1);
